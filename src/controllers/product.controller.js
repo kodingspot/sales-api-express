@@ -18,6 +18,15 @@ exports.create = (req, res) => {
 };
 
 
+exports.get = (req, res) => {
+  productModel.get(req.params.product_id)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch((error) => res.status(400).send({error}));
+};
+
+
 exports.update = (req, res) => {
   productModel.update(req.params.product_id, req.body)
     .then(response => {

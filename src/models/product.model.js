@@ -54,6 +54,7 @@ exports.all = (req) => {
   });
 };
 
+
 exports.create = (product) => {
   return new Promise((resolve, reject) => {
     /**
@@ -74,6 +75,38 @@ exports.create = (product) => {
       }
 
       resolve({product_id: res.insertId, ...product});
+    });
+  });
+};
+
+
+exports.get = (product_id) => {
+  return new Promise((resolve, reject) => {
+    /**
+     * simple validation for the product id
+     */
+    if ( !product_id ) {
+      reject('Product id cannot be empty!');
+    }
+
+    const sql = 'SELECT * FROM product WHERE product_id = ?';
+
+    connectionDatabase.query(sql, product_id, (err, res) => {
+      /**
+       * When the query encountered an error
+       */
+      if ( err ) {
+        reject(err);
+      }
+
+      /**
+       * When the product id is not in the table
+       */
+      if ( res.length <= 0) {
+        reject('Product ID not found in product!');
+      }
+      
+      resolve(res[0]);
     });
   });
 };
