@@ -25,3 +25,12 @@ exports.update = (req, res) => {
     })
     .catch((error) => res.status(400).send({error}));
 };
+
+
+exports.delete = (req, res) => {
+  productModel.delete(req.params.product_id)
+    .then(response => {
+      res.status(204).send(response);
+    })
+    .catch((error) => res.status(400).send({error}));
+};

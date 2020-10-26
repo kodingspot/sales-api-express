@@ -54,7 +54,6 @@ exports.all = (req) => {
   });
 };
 
-
 exports.create = (product) => {
   return new Promise((resolve, reject) => {
     /**
@@ -85,8 +84,8 @@ exports.update = (product_id, product) => {
     /**
      * simple validation for the product payload
      */
-    if ( !product ) {
-      reject('Data cannot be empty!');
+    if ( !product_id || !product ) {
+      reject('Data or id product cannot be empty!');
     }
 
     let sql = 'UPDATE product SET ';
@@ -119,4 +118,46 @@ exports.update = (product_id, product) => {
       resolve({product_id, ...product});
     });
   });
-}
+};
+
+
+exports.delete = (product_id) => {
+  return new Promise((resolve, reject) => {
+    /**
+     * simple validation for the product payload
+     */
+    if ( !product_id ) {
+      reject('Product id cannot be empty!');
+    }
+
+    const sql = 'DELETE FROM product WHERE product_id = ?'
+
+    connectionDatabase.query(sql, product_id, (err, res) => {
+      /**
+       * When the query encountered an error
+       */
+      if ( err ) {
+        reject(err);
+      }
+
+      /**
+       * When the product id is not in the table
+       */
+      if ( res.affectedRows === 0 ) {
+        reject('Product ID not found in product!');
+      }
+
+      /**
+       * The 204 (No Content) status code indicates that the 
+       * server has successfully fulfilled the request and that 
+       * there is no additional content to send in the response 
+       * payload body.
+       * 
+       * Link: https://tools.ietf.org/html/rfc7231#section-6.3.5
+       */
+      resolve(null);
+    });
+  });
+};
+
+
