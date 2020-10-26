@@ -1,0 +1,31 @@
+{
+  "name": "sales-api-express",
+  "version": "1.0.0",
+  "description": "Simple sales API with Express.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kodingspot/sales-api-express.git"
+  },
+  "keywords": [
+    "API",
+    "Express",
+    "JS",
+    "Node.js",
+    "Sales"
+  ],
+  "author": "kodingspot@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kodingspot/sales-api-express/issues"
+  },
+  "homepage": "https://github.com/kodingspot/sales-api-express#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "mysql": "^2.18.1"
+  }
+}
