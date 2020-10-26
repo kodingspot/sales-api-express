@@ -1,6 +1,7 @@
 const connectionDatabase = require('../databases/connection.database');
 const paginationHelper = require('../helpers/pagination.helper');
 
+
 exports.all = (req) => {
   return new Promise((resolve, reject) => {
     let sql = null;
@@ -52,3 +53,28 @@ exports.all = (req) => {
     });
   });
 };
+
+
+exports.create = (product) => {
+  return new Promise((resolve, reject) => {
+    /**
+     * simple validation for the product payload
+     */
+    if ( !product ) {
+      reject('Data cannot be empty!');
+    }
+
+    const sql = 'INSERT INTO product SET ?';
+
+    connectionDatabase.query(sql, product, (err, res) => {
+      /**
+       * When the query encountered an error
+       */
+      if ( err ) {
+        reject(err);
+      }
+
+      resolve({product_id: res.insertId, ...product});
+    });
+  });
+}
