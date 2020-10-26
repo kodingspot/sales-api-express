@@ -1,12 +1,12 @@
 const crypto = require('crypto');
-const jwtHelper = require('../helpers/jwt.helper');
+const userHelper = require('../helpers/user.helper');
 const connectionDatabase = require('../databases/connection.database');
 
 
 const get = exports.get = (username) => {
   return new Promise((resolve, reject) => {
     if ( !username ) {
-      reject('Username cannot be empty!');
+      reject({error: 'Username cannot be empty!'});
     }
 
     const sql = 'SELECT * FROM user WHERE username = ?';
@@ -27,7 +27,7 @@ const get = exports.get = (username) => {
 
 const checkPassword = exports.checkPassword = (username, password) => {
   return new Promise((resolve, reject) => {
-    if (!username || !passwords) {
+    if (!username || !password) {
       reject('Username or password cannot be empty!');
     }
 
@@ -80,16 +80,13 @@ exports.login = (username, password) => {
       const validPassword = await checkPassword(username, password);
       
       if ( !validPassword ) {
-         reject({error: 'Invalid password!'});
+         reject('Invalid password!');
       }
 
-      resolve({token: await jwtHelper.sign({username})});
+      resolve(await userHelper.sign({username}));
 
     } catch (error) {
-      reject({error: error.toString()});
+      reject(error.toString());
     }
   });
 };
-
-
-

@@ -14,9 +14,9 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const response = await userModel.login(req.body.username, req.body.password);
-    res.status(200).send(response);
+    const token = await userModel.login(req.body.username, req.body.password);
+    res.status(200).send({token});
   } catch (error) {
     res.status(400).send({error});
   }
-}
+};

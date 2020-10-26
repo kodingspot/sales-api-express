@@ -18,3 +18,22 @@ exports.sign = (payload) => {
     }
   });
 };
+
+
+exports.verify = (token) => {
+  return new Promise((resolve, reject) => {
+    try {
+      if (!token) {
+        reject('Authentication required!');
+      }
+
+      const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      console.log(payload);
+      resolve(payload);
+    } catch (error) {
+      reject(error.toString());
+    }
+
+
+  });
+}
