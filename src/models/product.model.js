@@ -62,6 +62,7 @@ exports.create = (product) => {
      */
     if ( !product ) {
       reject('Data cannot be empty!');
+      return;
     }
 
     const sql = 'INSERT INTO product SET ?';
@@ -72,9 +73,11 @@ exports.create = (product) => {
        */
       if ( err ) {
         reject(err);
+        return;
       }
 
       resolve({product_id: res.insertId, ...product});
+      return;
     });
   });
 };
@@ -87,6 +90,7 @@ exports.get = (product_id) => {
      */
     if ( !product_id ) {
       reject('Product id cannot be empty!');
+      return;
     }
 
     const sql = 'SELECT * FROM product WHERE product_id = ?';
@@ -97,6 +101,7 @@ exports.get = (product_id) => {
        */
       if ( err ) {
         reject(err);
+        return;
       }
 
       /**
@@ -104,9 +109,11 @@ exports.get = (product_id) => {
        */
       if ( res.length <= 0) {
         reject('Product ID not found in product!');
+        return;
       }
       
       resolve(res[0]);
+      return;
     });
   });
 };
@@ -119,6 +126,7 @@ exports.update = (product_id, product) => {
      */
     if ( !product_id || !product ) {
       reject('Data or id product cannot be empty!');
+      return;
     }
 
     let sql = 'UPDATE product SET ';
@@ -139,6 +147,7 @@ exports.update = (product_id, product) => {
        */
       if ( err ) {
         reject(err);
+        return;
       }
 
       /**
@@ -146,9 +155,11 @@ exports.update = (product_id, product) => {
        */
       if ( res.affectedRows === 0 ) {
         reject('Product ID not found in product!');
+        return;
       }
 
       resolve({product_id, ...product});
+      return;
     });
   });
 };
@@ -161,6 +172,7 @@ exports.delete = (product_id) => {
      */
     if ( !product_id ) {
       reject('Product id cannot be empty!');
+      return;
     }
 
     const sql = 'DELETE FROM product WHERE product_id = ?'
@@ -171,6 +183,7 @@ exports.delete = (product_id) => {
        */
       if ( err ) {
         reject(err);
+        return;
       }
 
       /**
@@ -178,6 +191,7 @@ exports.delete = (product_id) => {
        */
       if ( res.affectedRows === 0 ) {
         reject('Product ID not found in product!');
+        return;
       }
 
       /**
@@ -189,6 +203,7 @@ exports.delete = (product_id) => {
        * Link: https://tools.ietf.org/html/rfc7231#section-6.3.5
        */
       resolve(null);
+      return;
     });
   });
 };

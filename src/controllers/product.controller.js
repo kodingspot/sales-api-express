@@ -1,6 +1,7 @@
 const productModel = require('../models/product.model');
 
 exports.all = (req, res) => {
+  console.log(req.user);
   productModel.all(req)
     .then((response) => {
       res.status(200).send(response);

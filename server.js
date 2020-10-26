@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 require('./src/routes/product.route')(app);
 require('./src/routes/user.route')(app);
+require('./src/routes/cart.route')(app);
 
 // set port, listen for requests
 app.listen(3001, () => {
