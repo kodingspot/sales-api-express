@@ -28,12 +28,11 @@ exports.verify = (token) => {
       }
 
       const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-      console.log(payload);
       resolve(payload);
     } catch (error) {
       reject(error.toString());
     }
-
-
   });
-}
+};
+
+
