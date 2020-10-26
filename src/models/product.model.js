@@ -90,12 +90,13 @@ exports.update = (product_id, product) => {
     }
 
     let sql = 'UPDATE product SET ';
-        sql += 'title = ?, description = ?, price = ?, unit = ? WHERE product_id = ?';
+        sql += 'title = ?, description = ?, price = ?, quantity = ?, unit = ? WHERE product_id = ?';
     
     const payloads = [
       product.title,
       product.description,
       product.price,
+      product.quantity,
       product.unit,
       product_id
     ];
@@ -114,7 +115,7 @@ exports.update = (product_id, product) => {
       if ( res.affectedRows === 0 ) {
         reject('Product ID not found in product!');
       }
-      
+
       resolve({product_id, ...product});
     });
   });
