@@ -10,10 +10,18 @@ exports.all = (req, res) => {
 
 
 exports.create = (req, res) => {
-  console.log(req.body)
   productModel.create(req.body)
     .then(response => {
       res.status(201).send(response);
     })
     .catch((error) => res.status(400).send({error}));
-}
+};
+
+
+exports.update = (req, res) => {
+  productModel.update(req.params.product_id, req.body)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch((error) => res.status(400).send({error}));
+};

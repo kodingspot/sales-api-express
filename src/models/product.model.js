@@ -77,4 +77,45 @@ exports.create = (product) => {
       resolve({product_id: res.insertId, ...product});
     });
   });
+};
+
+
+exports.update = (product_id, product) => {
+  return new Promise((resolve, reject) => {
+    /**
+     * simple validation for the product payload
+     */
+    if ( !product ) {
+      reject('Data cannot be empty!');
+    }
+
+    let sql = 'UPDATE product SET ';
+        sql += 'title = ?, description = ?, price = ?, unit = ? WHERE product_id = ?';
+    
+    const payloads = [
+      product.title,
+      product.description,
+      product.price,
+      product.unit,
+      product_id
+    ];
+
+    connectionDatabase.query(sql, payloads, (err, res) => {
+      /**
+       * When the query encountered an error
+       */
+      if ( err ) {
+        reject(err);
+      }
+
+      /**
+       * When the product id is not in the table
+       */
+      if ( res.affectedRows === 0 ) {
+        reject('Product ID not found in product!');
+      }
+      
+      resolve({product_id, ...product});
+    });
+  });
 }
